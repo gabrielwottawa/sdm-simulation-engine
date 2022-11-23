@@ -2,28 +2,16 @@
 
 namespace SimulationEngine.Api.Datas
 {
-    public static class ManagerDatas<T> where T : Manager
+    public static class ManagerDatas<T> where T : Entity
     {
         private static readonly Historic<T> historic = new Historic<T>();
 
-        public static void CreateInstance(T instance)
-        {
-            historic.CreateInstance(instance);
-        }
+        public static void CreateInstance(T instance) => historic.CreateInstance(instance);
 
-        public static void DeleteInstance(T instance)
-        {
-            historic.DeleteInstance(instance);
-        }
+        public static void DeleteInstance(T instance) => historic.DeleteInstance(instance);
 
-        public static List<InstanceInfo<T>> ListToAlive()
-        {
-           return historic.ListToAlive();
-        }
+        public static List<InstanceInfo<T>> ListAlive() => historic.ListAlive();
 
-        public static List<InstanceInfo<T>> ListToDie()
-        {
-            return historic.ListToDie();
-        }
+        public static List<InstanceInfo<T>> ListDead() => historic.ListDead();
     }
 }

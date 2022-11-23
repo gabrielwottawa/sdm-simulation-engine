@@ -10,7 +10,7 @@ namespace SimulationEngine.Api.Models
 {
     public sealed record HistoricEntitySet(double time, int qty);
 
-    public sealed class EntitySet<TEntity> where TEntity : EntityManager
+    public sealed class EntitySet<TEntity> where TEntity : ManagedEntity
     {
         private readonly Historic<TEntity> historic;
         private IEnumerable<TEntity> internalCollections;

@@ -1,7 +1,7 @@
 ﻿
 namespace SimulationEngine.Api.Models.Interfaces
 {
-    public interface IAllocatedManager<out T> where T : Resource, new()
+    public interface IManagedAllocation<out T> where T : Resource, new()
     {
         T Resource { get; }
 

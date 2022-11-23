@@ -12,7 +12,7 @@ namespace SimulationEngine.Api.Datas
     {
         public static List<HistoricBase> ListHistorics { get; } = new List<HistoricBase>();
 
-        public static void AddListHistorics<T>(Historic<T> historic) where T : Manager
+        public static void AddListHistorics<T>(Historic<T> historic) where T : Models.Entity
         {
             ListHistorics.Add(historic);
         }

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SimulationEngine.Api.Models
 {
-    public class AllocatedManager<T> : Manager, IAllocatedManager<T> where T : Resource, new()
+    public class ManagedAllocation<T> : Entity, IManagedAllocation<T> where T : Resource, new()
     {
         public T Resource { get; }
 
-        public AllocatedManager(T resource)
+        public ManagedAllocation(T resource)
         {
             Resource = resource;
             CreateAllLevels();

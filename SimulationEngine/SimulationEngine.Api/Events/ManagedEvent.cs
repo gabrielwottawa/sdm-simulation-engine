@@ -2,17 +2,17 @@
 
 namespace SimulationEngine.Api.Events
 {
-    public abstract class ManagerEvent : Manager
+    public abstract class ManagedEvent : Entity
     {
-        protected ManagerEvent()
+        protected ManagedEvent()
         {
-            this.CreateAllLevels();
+            CreateAllLevels();
         }
 
         public void Execute()
         {
             Strategy();
-            this.DeleteAllLevels();
+            DeleteAllLevels();
         }
 
         protected abstract void Strategy();

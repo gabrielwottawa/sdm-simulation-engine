@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SimulationEngine.Api.Models
 {
-    public class EntityManager : Manager
+    public class ManagedEntity : Entity
     {
-        protected EntityManager()
+        protected ManagedEntity()
         {
             this.CreateAllLevels();
         }
