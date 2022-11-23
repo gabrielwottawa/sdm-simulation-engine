@@ -37,8 +37,6 @@ namespace Restaurant.Resources
             initializerReplaceCashier();
             initializerDeliveryOrder();
             initializerSanitizingTable();
-
-            PetriNet.ExecuteCycle();
         }
 
         private void initializerReplaceCashier()
@@ -116,7 +114,7 @@ namespace Restaurant.Resources
             switch (place.Id)
             {
                 case "3":
-                    ClientGroup = EngineRestaurant.QueueOrders.Remove();
+                    ClientGroup = EngineRestaurant.QueueDelivery.Remove();
                     if (EngineRestaurant.Debug) 
                         Console.WriteLine($"\tGarçom começa a entrega {ClientGroup.Id}! {SimulationEngine.Api.Engine.Time}");
                     break;

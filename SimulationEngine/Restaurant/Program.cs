@@ -1,14 +1,24 @@
-﻿using SimulationEngine.Api;
+﻿using Restaurant.Engine;
+using Restaurant.Events.Clients;
+using Restaurant.Resources;
+using SimulationEngine.Api;
 using SimulationEngine.Api.Datas;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        initializeMenu();
+        EngineRestaurant.Initializer();
+
+        var ev = new ArrivalCustomers();
+        Engine.ScheduleNow(ev);
+
+        initializeMenu(() => executeCycle(EngineRestaurant.Bartender));
     }
 
-    private static void initializeMenu()
+    private static void executeCycle(Bartender bartender) => bartender.PetriNet.ExecuteCycle();
+
+    private static void initializeMenu(Action callback = null)
     {
         Console.Clear();        
         Console.WriteLine("\nSelecione uma opção!");
@@ -19,7 +29,7 @@ internal class Program
         {
             printMenu();
             option = Console.ReadLine();
-            executeOption(option);
+            executeOption(option, callback);
 
         } while (option != "7");
     }    
@@ -53,12 +63,12 @@ internal class Program
                 break;
 
             case "2":
-                time = getTime($"Informe em quanto tempo ({"min"}) a simulação irá parar:");
+                time = getTime($"Informe em quanto tempo ({EngineRestaurant.UnitTime}) a simulação irá parar:");
                 Engine.SimulateUntilDeterminedTime(time, callback);
                 break;
 
             case "3":
-                time = getTime($"Informe por quanto tempo ({"min"}) a simulação irá executar:");
+                time = getTime($"Informe por quanto tempo ({EngineRestaurant.UnitTime}) a simulação irá executar:");
                 Engine.SimulateForDeterminedTime(time, callback);
                 break;
 
@@ -72,8 +82,8 @@ internal class Program
                 {
                     Console.WriteLine("\n\n------------");
                     Console.WriteLine(history.Name + " maior tempo de vida " + history.LongerLifetime());
-                    Console.WriteLine(history.Name + " menor tempo de vida " + history.LongerLifetime());
-                    Console.WriteLine(history.Name + " tempo médio de vida " + history.LongerLifetime());
+                    Console.WriteLine(history.Name + " menor tempo de vida " + history.ShorterLifetime());
+                    Console.WriteLine(history.Name + " tempo médio de vida " + history.AverageLifetime());
                     Console.WriteLine("------------\n\n");
                 }
                 break;

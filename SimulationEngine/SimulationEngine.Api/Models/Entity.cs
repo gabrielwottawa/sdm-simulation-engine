@@ -30,7 +30,7 @@ namespace SimulationEngine.Api.Models
         {
             var currentType = GetType();
 
-            while (currentType != null && currentType.Name != "Manager")
+            while (currentType != null && currentType.Name != "Entity")
             {
                 callTypeManager(currentType, "DeleteInstance");
                 currentType = currentType.BaseType;
