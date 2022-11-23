@@ -8,6 +8,8 @@ namespace SimulationEngine.Api
 
         public static double Time { get; private set; }
 
+        public static int FutureEventSize => listFutureEvents.Count;
+
         public static void SimulateOneExecution(Action callback = null)
         {
             if (listFutureEvents.TryDequeue(out var ev, out var priority))

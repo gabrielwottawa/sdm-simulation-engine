@@ -10,13 +10,13 @@ namespace SimulationEngine.Api.Datas
 {
     public static class DataCollect
     {
-        public static List<HistoricBase> ListHistorics { get; } = new List<HistoricBase>();
+        public static List<HistoricBase> HistoricList { get; } = new List<HistoricBase>();
 
-        public static void AddListHistorics<T>(Historic<T> historic) where T : Models.Entity
+        public static void AddListHistorics<T>(Historic<T> historic) where T : Entity
         {
-            ListHistorics.Add(historic);
+            HistoricList.Add(historic);
         }
 
-        public static HistoricBase GetHistoricBase(string name) => ListHistorics.FirstOrDefault(h => h.Name.Equals(name));
+        public static HistoricBase GetHistoricBase(string name) => HistoricList.FirstOrDefault(h => h.Name.Equals(name));
     }
 }
