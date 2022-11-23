@@ -24,7 +24,7 @@ namespace Restaurant.Events.Bartender
 
         protected override void Strategy()
         {
-            SimulationEngine.Api.Engine.ScheduleNow(new OrderPrepared());
+            SimulationEngine.Api.Engine.ScheduleNow(new SendOrderKitchen());
 
             clientGroup.Order = new Order(clientGroup);
 

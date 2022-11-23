@@ -29,12 +29,12 @@ namespace Restaurant.Events.Clients
 
             clients.OccupiedPlace = allocatedTable(1);
 
-            //EngineRestaurant.Bartender.
+            EngineRestaurant.Bartender.CustomerGoSit.ProduceToken(1);
 
             if (clients.Order.ReadyToEat)
             {
                 EngineRestaurant.QueueDelivery.Insert(clients);
-                //EngineRestaurant.Bartender.
+                EngineRestaurant.Bartender.OrderReady.ProduceToken(1);
             }
         }
 

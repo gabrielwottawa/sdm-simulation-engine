@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Restaurant.Engine;
+using Restaurant.Entities;
+using SimulationEngine.Api.Events;
 
 namespace Restaurant.Events.Clients
 {
-    internal class StartEating
+    public class StartEating : ManagedEvent
     {
+        private readonly ClientGroup clientGroup;
+
+        public StartEating(ClientGroup clientGroup)
+        {
+            this.clientGroup = clientGroup;
+        }
+
+        protected override void Strategy()
+        {
+            SimulationEngine.Api.Engine.ScheduleIn(new LeaveTheTable(clientGroup), EngineRestaurant.MealTime);
+        }
     }
 }

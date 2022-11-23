@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Restaurant.Engine;
+using SimulationEngine.Api.Events;
 
 namespace Restaurant.Events.Bartender
 {
-    internal class FinalizeDeliveryOrder
+    public class FinalizeDeliveryOrder : ManagedEvent
     {
+        protected override void Strategy()
+        {
+            EngineRestaurant.Bartender.OrderOnTable.ProduceToken(1);
+        }
     }
 }

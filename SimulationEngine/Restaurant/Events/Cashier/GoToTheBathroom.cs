@@ -1,10 +1,5 @@
 ﻿using Restaurant.Engine;
 using SimulationEngine.Api.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Restaurant.Events.Cashier
 {
@@ -12,7 +7,7 @@ namespace Restaurant.Events.Cashier
     {
         protected override void Strategy()
         {
-            //EngineRestaurant.Bartender.
+            EngineRestaurant.Bartender.ReplaceCashier.ProduceToken(1);
         }
     }
 }

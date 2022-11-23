@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Restaurant.Entities;
+using SimulationEngine.Api.Events;
 
 namespace Restaurant.Events.Clients
 {
-    internal class LeaveTheTable
+    public class LeaveTheTable : ManagedEvent
     {
+        private ClientGroup clientGroup;
+
+        public LeaveTheTable(ClientGroup clientGroup)
+        {
+            this.clientGroup = clientGroup;
+        }
+
+        protected override void Strategy()
+        {
+            foreach(var chair in clientGroup.OccupiedPlace)
+                chair.Deallocate();
+
+            SimulationEngine.Api.Engine.ScheduleNow(new GoToTable(clientGroup.Qty));
+        }
     }
 }

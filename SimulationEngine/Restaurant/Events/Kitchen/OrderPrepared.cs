@@ -1,17 +1,36 @@
-﻿using SimulationEngine.Api.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Restaurant.Engine;
+using Restaurant.Entities;
+using Restaurant.Resources;
+using SimulationEngine.Api.Events;
+using SimulationEngine.Api.Managers;
+using SimulationEngine.Api.Models.Interfaces;
 
 namespace Restaurant.Events.Kitchen
 {
     public class OrderPrepared : ManagedEvent
     {
+        private readonly IEnumerable<IManagedAllocation<Chef>> chefs;
+        private readonly ClientGroup client;
+
+        public OrderPrepared(IEnumerable<IManagedAllocation<Chef>> chefs, ClientGroup client)
+        {
+            this.chefs = chefs;
+            this.client = client;
+        }
+
         protected override void Strategy()
         {
-            throw new NotImplementedException();
+            ResourceManager<Chef>.Deallocate(chefs);
+
+            SimulationEngine.Api.Engine.ScheduleNow(new SendOrderKitchen());
+
+            client.Order.ReadyToEat = true;
+
+            if (client.OccupiedPlace != null)
+            {
+                EngineRestaurant.QueueDelivery.Insert(client);
+                EngineRestaurant.Bartender.OrderReady.ProduceToken(1);
+            }
         }
     }
 }
