@@ -2,15 +2,15 @@
 
 namespace SimulationEngine.Api.Models
 {
-    public abstract class Manager
+    public abstract class Entity
     {
         private static int countId = 0;
 
-        public static string NameType { get; } = nameof(Manager);
+        public static string NameType { get; } = nameof(Entity);
 
         public int Id { get; private set; }
 
-        protected Manager()
+        protected Entity()
         {
             Id = createId();
         }
@@ -21,7 +21,7 @@ namespace SimulationEngine.Api.Models
 
             while (currentType != null && currentType.Name != NameType)
             {
-                managerType(currentType, "nascimento");
+                callTypeManager(currentType, "CreateInstance");
                 currentType = currentType.BaseType;
             }
         }
@@ -32,12 +32,12 @@ namespace SimulationEngine.Api.Models
 
             while (currentType != null && currentType.Name != "Manager")
             {
-                managerType(currentType, "morte");
+                callTypeManager(currentType, "DeleteInstance");
                 currentType = currentType.BaseType;
             }
         }
 
-        private void managerType(Type currentType, string methodName)
+        private void callTypeManager(Type currentType, string methodName)
         {
             var managerType = typeof(ManagerDatas<>).MakeGenericType(currentType);
             var methodInfo = managerType.GetMethod(methodName);

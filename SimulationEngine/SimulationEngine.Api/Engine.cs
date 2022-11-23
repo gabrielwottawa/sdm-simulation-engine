@@ -4,7 +4,7 @@ namespace SimulationEngine.Api
 {
     public static class Engine
     {
-        private static readonly PriorityQueue<ManagerEvent, double> listFutureEvents = new();
+        private static readonly PriorityQueue<ManagedEvent, double> listFutureEvents = new();
 
         public static double Time { get; private set; }
 
@@ -49,12 +49,12 @@ namespace SimulationEngine.Api
             }
         }
 
-        private static void ScheduleEvent(ManagerEvent ev, double timeSelected) => listFutureEvents.Enqueue(ev, timeSelected);
+        private static void ScheduleEvent(ManagedEvent ev, double timeSelected) => listFutureEvents.Enqueue(ev, timeSelected);
 
-        public static void ScheduleNow(ManagerEvent ev) => ScheduleEvent(ev, Time);        
+        public static void ScheduleNow(ManagedEvent ev) => ScheduleEvent(ev, Time);        
 
-        public static void ScheduleIn(ManagerEvent ev, double timeAdd) => ScheduleEvent(ev, Time + timeAdd);
+        public static void ScheduleIn(ManagedEvent ev, double timeAdd) => ScheduleEvent(ev, Time + timeAdd);
 
-        public static void ScheduleWithAbsoluteTime(ManagerEvent ev, double absoluteTime) => ScheduleEvent(ev, absoluteTime);
+        public static void ScheduleWithAbsoluteTime(ManagedEvent ev, double absoluteTime) => ScheduleEvent(ev, absoluteTime);
     }
 }

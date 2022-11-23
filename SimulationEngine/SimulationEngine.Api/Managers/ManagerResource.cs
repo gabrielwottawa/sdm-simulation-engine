@@ -14,7 +14,7 @@ namespace SimulationEngine.Api.Managers
 
         private static List<TResource> listResourcesFree()
         {
-            var resourcesInfoToLive = ManagerDatas<TResource>.ListToAlive();
+            var resourcesInfoToLive = ManagerDatas<TResource>.ListAlive();
             var resourcesFree = new List<TResource>();
 
             foreach(var info in resourcesInfoToLive)
@@ -32,25 +32,25 @@ namespace SimulationEngine.Api.Managers
             return resourcesFree.Count >= qty;
         }
 
-        public static IEnumerable<IAllocatedManager<TResource>> Allocated(int qty)
+        public static IEnumerable<IManagedAllocation<TResource>> Allocated(int qty)
         {
             var resourcesFree = listResourcesFree();
 
             if (resourcesFree.Count < qty)
                 throw new Exception("Não existem recursos livres.");
 
-            var newAllocateds = new List<IAllocatedManager<TResource>>();
+            var newAllocateds = new List<IManagedAllocation<TResource>>();
 
             for(int i = 0; i < qty; i++)
             {
-                var newAllocated = new AllocatedManager<TResource>(resourcesFree[i]);
+                var newAllocated = new ManagedAllocation<TResource>(resourcesFree[i]);
                 newAllocateds.Add(newAllocated);
             }
 
             return newAllocateds;
         }
 
-        public static void Deallocate(IEnumerable<IAllocatedManager<TResource>> allocatedManagers)
+        public static void Deallocate(IEnumerable<IManagedAllocation<TResource>> allocatedManagers)
         {
             foreach(var allocated in allocatedManagers)
                 allocated.Deallocate();

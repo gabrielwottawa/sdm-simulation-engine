@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SimulationEngine.Api.Models
 {
-    public class Resource : Manager
+    public class Resource : Entity
     {
         public bool Allocated { get; set; } = false;
 

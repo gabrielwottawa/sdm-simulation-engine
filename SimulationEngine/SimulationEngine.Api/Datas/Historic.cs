@@ -3,7 +3,7 @@ using SimulationEngine.Api.Models;
 
 namespace SimulationEngine.Api.Datas
 {
-    public class Historic<T> : HistoricBase where T : notnull, Manager
+    public class Historic<T> : HistoricBase where T : notnull, Entity
     {
         public Historic()
         {
@@ -30,9 +30,9 @@ namespace SimulationEngine.Api.Datas
             instanceInfo.ToDie();
         }
 
-        public List<InstanceInfo<T>> ListToAlive() => ListInstanceInfos.FindAll(f => f.Alive);
+        public List<InstanceInfo<T>> ListAlive() => ListInstanceInfos.FindAll(f => f.Alive);
 
-        public List<InstanceInfo<T>> ListToDie() => ListInstanceInfos.FindAll(f => f.Alive == false);
+        public List<InstanceInfo<T>> ListDead() => ListInstanceInfos.FindAll(f => !f.Alive);
 
         public override double AverageLifetime()
         {
@@ -114,7 +114,7 @@ namespace SimulationEngine.Api.Datas
             var nameClass = type.Name;
             var nameClassBase = typeBase.Name;
 
-            if (nameClassBase != "Object" && nameClassBase != Manager.NameType)
+            if (nameClassBase != "Object" && nameClassBase != Models.Entity.NameType)
                 return nameClassBase + " " + nameClass;
             else
                 return nameClass;
