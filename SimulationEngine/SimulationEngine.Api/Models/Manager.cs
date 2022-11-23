@@ -21,7 +21,7 @@ namespace SimulationEngine.Api.Models
 
             while (currentType != null && currentType.Name != NameType)
             {
-                ManagerType(currentType, "nascimento");
+                managerType(currentType, "nascimento");
                 currentType = currentType.BaseType;
             }
         }
@@ -32,12 +32,12 @@ namespace SimulationEngine.Api.Models
 
             while (currentType != null && currentType.Name != "Manager")
             {
-                ManagerType(currentType, "morte");
+                managerType(currentType, "morte");
                 currentType = currentType.BaseType;
             }
         }
 
-        private void ManagerType(Type currentType, string methodName)
+        private void managerType(Type currentType, string methodName)
         {
             var managerType = typeof(ManagerDatas<>).MakeGenericType(currentType);
             var methodInfo = managerType.GetMethod(methodName);

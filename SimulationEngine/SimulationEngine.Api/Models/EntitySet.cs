@@ -17,22 +17,23 @@ namespace SimulationEngine.Api.Models
 
         public string Name { get; set; }
         public Mode Mode { get; set; }
-        public int SizeMax { get; set; } = int.MaxValue;
-        public int SizeCurrent => internalCollections.Count();
+        public int MaxSize { get; set; }
+        public int CurrentSize => internalCollections.Count();
         public Historic<TEntity> Historic => historic;
         public List<HistoricEntitySet> HistoricEntitySets { get; } = new List<HistoricEntitySet>();
 
-        public EntitySet(string name, Mode mode = Mode.Fifo)
+        public EntitySet(string name, Mode mode, int maxSize)
         {
             Name = name;
             Mode = mode;
+            MaxSize = maxSize;
             internalCollections = new List<TEntity>();
             historic = new Historic<TEntity>("EntitySet " + Name);
         }
 
-        public bool Add(TEntity entity)
+        public bool Insert(TEntity entity)
         {
-            if (SizeCurrent == SizeMax)
+            if (IsFull())
                 return false;
 
             historic.CreateInstance(entity);
@@ -40,14 +41,14 @@ namespace SimulationEngine.Api.Models
             switch (Mode)
             {
                 case Mode.Fifo:
-                    FifoAdd(entity);
+                    fifoAdd(entity);
                     break;
                 case Mode.Lifo:
-                    LifoAdd(entity);
+                    lifoAdd(entity);
                     break;
             }
 
-            HistoricEntitySets.Add(new HistoricEntitySet(Engine.Time, SizeCurrent));
+            HistoricEntitySets.Add(new HistoricEntitySet(Engine.Time, CurrentSize));
 
             return false;
         }
@@ -56,46 +57,50 @@ namespace SimulationEngine.Api.Models
         {
             var entity = Mode switch
             {
-                Mode.Fifo => FifoRemove(),
-                Mode.Lifo => LifoRemove(),
+                Mode.Fifo => fifoRemove(),
+                Mode.Lifo => lifoRemove(),
                 _ => null
             };
 
             historic.DeleteInstance(entity);
 
-            HistoricEntitySets.Add(new HistoricEntitySet(Engine.Time, SizeCurrent));
+            HistoricEntitySets.Add(new HistoricEntitySet(Engine.Time, CurrentSize));
 
             return entity;
         }
 
-        private TEntity LifoRemove()
+        private TEntity lifoRemove()
         {
             var stack = new Stack<TEntity>(internalCollections);
-            TEntity entity = stack.Pop();
+            var entity = stack.Pop();
             internalCollections = new List<TEntity>(stack);
             return entity;
         }
 
-        private TEntity FifoRemove()
+        private TEntity fifoRemove()
         {
-            Queue<TEntity> queue = new Queue<TEntity>(internalCollections);
-            TEntity entity = queue.Dequeue();
+            var queue = new Queue<TEntity>(internalCollections);
+            var entity = queue.Dequeue();
             internalCollections = new List<TEntity>(queue);
             return entity;
         }
 
-        private void LifoAdd(TEntity entity)
+        private void lifoAdd(TEntity entity)
         {
             var stack = new Stack<TEntity>(internalCollections);
             stack.Push(entity);
             internalCollections = new List<TEntity>(stack);
         }
 
-        private void FifoAdd(TEntity entity)
+        private void fifoAdd(TEntity entity)
         {
             var queue = new Queue<TEntity>(internalCollections);
             queue.Enqueue(entity);
             internalCollections = new List<TEntity>(queue);
         }
+
+        public bool IsEmpty() => !internalCollections.Any();
+
+        public bool IsFull() => CurrentSize == MaxSize;        
     }
 }
