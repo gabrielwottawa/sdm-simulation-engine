@@ -4,7 +4,7 @@ using SimulationEngine.Api.Models.Interfaces;
 
 namespace SimulationEngine.Api.Managers
 {
-    public static class ManagerResource<TResource> where TResource : Resource, new()
+    public static class ResourceManager<TResource> where TResource : Resource, new()
     {
         public static void CreateResource(int qty)
         {
@@ -12,7 +12,7 @@ namespace SimulationEngine.Api.Managers
                 new TResource();
         }
 
-        private static List<TResource> listResourcesFree()
+        private static List<TResource> listFreeResources()
         {
             var resourcesInfoToLive = ManagerDatas<TResource>.ListAlive();
             var resourcesFree = new List<TResource>();
@@ -28,13 +28,13 @@ namespace SimulationEngine.Api.Managers
 
         public static bool CheckAvailability(int qty)
         {
-            var resourcesFree = listResourcesFree();
+            var resourcesFree = listFreeResources();
             return resourcesFree.Count >= qty;
         }
 
         public static IEnumerable<IManagedAllocation<TResource>> Allocated(int qty)
         {
-            var resourcesFree = listResourcesFree();
+            var resourcesFree = listFreeResources();
 
             if (resourcesFree.Count < qty)
                 throw new Exception("Não existem recursos livres.");

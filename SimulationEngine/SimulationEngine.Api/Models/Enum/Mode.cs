@@ -3,9 +3,9 @@ namespace SimulationEngine.Api.Models.Enum
 {
     public enum Mode
     {
-        Nenhum,
+        None,
         Fifo,
         Lifo,
-        Prioridade
+        Priority
     }
 }

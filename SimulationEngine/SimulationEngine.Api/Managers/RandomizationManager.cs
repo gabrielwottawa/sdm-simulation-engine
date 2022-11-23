@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimulationEngine.Api.Managers
+﻿namespace SimulationEngine.Api.Managers
 {
-    public class ManagerRandom
+    public class RandomizationManager
     {
         private const long m = 4294967296;
         private const long a = 1664525;
@@ -15,12 +9,12 @@ namespace SimulationEngine.Api.Managers
         private double lastButOneManager_0a1 = -999.99;
         private double lastManager_0a1;
 
-        public ManagerRandom()
+        public RandomizationManager()
         {
             lastManager = DateTime.Now.Ticks % m;
         }
 
-        public ManagerRandom(long seed)
+        public RandomizationManager(long seed)
         {
             lastManager = seed;
         }

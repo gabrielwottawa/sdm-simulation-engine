@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SimulationEngine.Api.Managers
 {
-    public static class ManagerRandomContext
+    public static class RandomizationManagerContext
     {
-        public static ManagerRandom ManagerRandom => new ManagerRandom();
+        public static RandomizationManager ManagerRandom => new RandomizationManager();
     }
 }
