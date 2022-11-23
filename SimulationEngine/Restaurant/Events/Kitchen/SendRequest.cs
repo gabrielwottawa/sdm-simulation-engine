@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimulationEngine.Api.Events;
 
 namespace Restaurant.Events.Kitchen
 {
-    internal class SendRequest
+    public class SendRequest : ManagedEvent
     {
+        protected override void Strategy()
+        {
+            //Engin
+        }
     }
 }
