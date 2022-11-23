@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimulationEngine.Api.Models;
 
 namespace Restaurant.Entities
 {
-    internal class Order
+    public class Order : ManagedEntity
     {
+        private ClientGroup clientGroup { get; set; }
+
+        public bool ReadyToEat { get; set; }
+
+        public Order(ClientGroup clientGroup)
+        {
+            this.clientGroup = clientGroup;
+        }
     }
 }
