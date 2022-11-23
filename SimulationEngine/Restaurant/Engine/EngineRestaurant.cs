@@ -9,6 +9,8 @@ namespace Restaurant.Engine
 {
     public class EngineRestaurant
     {
+        public const bool Debug = true;
+
         public static readonly EntitySet<ClientGroup> QueueCashierOne = new EntitySet<ClientGroup>("Fila do caixa 1", Mode.Fifo, int.MaxValue);
 
         public static readonly EntitySet<ClientGroup> QueueCashierTwo = new EntitySet<ClientGroup>("Fila do caixa 2", Mode.Fifo, int.MaxValue);
