@@ -1,8 +1,10 @@
 ﻿using Restaurant.Engine;
+using Restaurant.Entities;
 using Restaurant.Events.Clients;
 using Restaurant.Resources;
 using SimulationEngine.Api;
 using SimulationEngine.Api.Datas;
+using SimulationEngine.Api.Models;
 
 internal class Program
 {
@@ -80,11 +82,11 @@ internal class Program
             case "5":
                 foreach(var history in DataCollect.HistoricList)
                 {
-                    Console.WriteLine("\n\n------------");
+                    Console.WriteLine("\n------------");
                     Console.WriteLine(history.Name + " maior tempo de vida " + history.LongerLifetime());
                     Console.WriteLine(history.Name + " menor tempo de vida " + history.ShorterLifetime());
                     Console.WriteLine(history.Name + " tempo médio de vida " + history.AverageLifetime());
-                    Console.WriteLine("------------\n\n");
+                    Console.WriteLine("------------\n");
                 }
                 break;
 
@@ -121,11 +123,70 @@ internal class Program
 
     private static void showResourceStatistics()
     {
-        throw new NotImplementedException();
+        var allocationResourceCounterChair = DataCollect.GetHistoricBase("Historic ManagedAllocation CounterChair");
+        var allocationResourceTwoSeaterTable = DataCollect.GetHistoricBase("Historic ManagedAllocation TwoSeaterTable");
+        var allocationResourceFourSeaterTable = DataCollect.GetHistoricBase("Historic ManagedAllocation FourSeaterTable");
+
+        var allocationResourceCashierOne = DataCollect.GetHistoricBase("Historic ManagedAllocation CashierOne");
+        var allocationResourceCashierTwo = DataCollect.GetHistoricBase("Historic ManagedAllocation CashierTwo");
+
+        var allocationResourceChef = DataCollect.GetHistoricBase("Historic ManagedAllocation Chef");
+
+        printResourceStatistics(allocationResourceCounterChair, "Cadeira balcão");
+        printResourceStatistics(allocationResourceTwoSeaterTable, "Mesa de 2 lugares");
+        printResourceStatistics(allocationResourceFourSeaterTable, "Mesa de 4 lugares");
+
+        printResourceStatistics(allocationResourceCashierOne, "Atendente caixa 1");
+        printResourceStatistics(allocationResourceCashierTwo, "Atendente caixa 2");
+
+        printResourceStatistics(allocationResourceChef, "Chefe de cozinha");
+    }
+
+    private static void printResourceStatistics(SimulationEngine.Api.Base.HistoricBase allocationResourceCounterChair, string resourceName)
+    {
+        if (allocationResourceCounterChair != null)
+            Console.WriteLine($"O tempo médio que o recurso {resourceName} fica alocado é de "+ $"{allocationResourceCounterChair.StandardDeviationOfLife().ToString("N4")} {EngineRestaurant.UnitTime}.");
     }
 
     private static void showQueueStatistics()
     {
-        throw new NotImplementedException();
+        var historyArrivalCustomers = (Historic<ArrivalCustomers>)DataCollect.GetHistoricBase("Historic ManagedEvent ArrivalCustomers");
+
+        if (historyArrivalCustomers != null)
+            Console.WriteLine($"\nChegaram {historyArrivalCustomers.ListInstanceInfos.Count} clientes ao Restaurante.");
+
+        printQueueStatistics(EngineRestaurant.QueueCashierOne, "cliente(s)");
+        printQueueStatistics(EngineRestaurant.QueueCashierTwo, "cliente(s)");
+
+        printQueueStatistics(EngineRestaurant.QueueCounterChair, "cliente(s)");
+        printQueueStatistics(EngineRestaurant.QueueTwoSeaterTable, "cliente(s)");
+        printQueueStatistics(EngineRestaurant.QueueFourSeaterTable, "cliente(s)");
+
+        printQueueStatistics(EngineRestaurant.QueueOrders, "pedido(s)");
+        printQueueStatistics(EngineRestaurant.QueueDelivery, "pedido(s)");
+    }
+
+    private static void printQueueStatistics(EntitySet<ClientGroup> queue, string queueName)
+    {
+        prinTwentThroughTheQueue(queue, queueName);
+        printTimeQueue(queue, queueName);
+    }
+
+    private static void printTimeQueue(EntitySet<ClientGroup> queue, string queueName)
+    {
+        if (queue.Historic != null)
+        {
+            var deviation = $"Désvio médio: +/- {queue.Historic.StandardDeviationOfLife().ToString("N4")} {EngineRestaurant.UnitTime}.";
+            Console.WriteLine($"Tempo médio dos {queueName} é de {queue.Historic.AverageLifetime().ToString("N4")} {EngineRestaurant.UnitTime}.\n{deviation}\n");
+        }
+    }
+
+    private static void prinTwentThroughTheQueue(EntitySet<ClientGroup> queue, string queueName)
+    {
+        if (queue.Historic != null)
+        {
+            Console.WriteLine($"Quantidade: {queue.Historic.ListInstanceInfos.Count} {queueName} passaram pela {queue.Name.ToLower()}.");
+            Console.WriteLine($"Tamanho atual da {queue.Name.ToLower()}: {queue.CurrentSize}.");
+        }
     }
 }

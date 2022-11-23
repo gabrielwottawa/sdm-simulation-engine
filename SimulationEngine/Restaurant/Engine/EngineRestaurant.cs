@@ -15,7 +15,7 @@ namespace Restaurant.Engine
 
         public static readonly EntitySet<ClientGroup> QueueCashierTwo = new EntitySet<ClientGroup>("Fila do caixa 2", Mode.Fifo, int.MaxValue);
 
-        public static readonly EntitySet<ClientGroup> QueueOrders = new EntitySet<ClientGroup>("Fila pedidos", Mode.Fifo, int.MaxValue);
+        public static readonly EntitySet<ClientGroup> QueueOrders = new EntitySet<ClientGroup>("Fila pedidos da cozinha", Mode.Fifo, int.MaxValue);
 
         public static readonly EntitySet<ClientGroup> QueueDelivery = new EntitySet<ClientGroup>("Fila pedidos para entrega", Mode.Fifo, int.MaxValue);
 

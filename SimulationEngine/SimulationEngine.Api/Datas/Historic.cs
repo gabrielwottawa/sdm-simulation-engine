@@ -102,7 +102,7 @@ namespace SimulationEngine.Api.Datas
 
         private void initialize(string name)
         {
-            Name = "Histórico " + name;
+            Name = "Historic " + name;
             DataCollect.AddListHistorics(this);
         }
 
