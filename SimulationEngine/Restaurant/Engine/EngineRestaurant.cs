@@ -26,7 +26,7 @@ namespace Restaurant.Engine
         public static readonly EntitySet<ClientGroup> QueueFourSeaterTable = new EntitySet<ClientGroup>("Fila mesas de 4 lugares", Mode.Fifo, int.MaxValue);
 
 
-        public const string UnitTime = "min";
+        public const string UnitTime = "ms";
 
         public const double MaxTimeArrivalCustomers = 180.00;
 

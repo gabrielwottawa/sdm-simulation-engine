@@ -128,7 +128,7 @@ namespace SimulationEngine.Api.Datas
             if (argsGenerics.Length == 0)
                 return "";
 
-            var genericNames = "< ";
+            var genericNames = "";
 
             for (int i = 0; i < argsGenerics.Length; i++)
             {
@@ -136,7 +136,7 @@ namespace SimulationEngine.Api.Datas
                 genericNames += typeArg.Name;
             }
 
-            return genericNames += " >";
+            return genericNames;
         }
 
         private string createNameHistoric() => nameNotGenerics() + typeGenerics();
