@@ -63,7 +63,7 @@ namespace Restaurant.Resources
         private void replaceCashierProducedToken(Place place)
         {
             if (place.Id == "20")
-                SimulationEngine.Api.Engine.ScheduleIn(new FinishGoingToTheBathroom(), EngineRestaurant.BathroomReturnTime);
+                SimulationEngine.Api.Scheduler.ScheduleIn(new FinishGoingToTheBathroom(), EngineRestaurant.BathroomReturnTime);
         }
 
         private void replaceCashierConsumedToken(Place place)
@@ -72,11 +72,11 @@ namespace Restaurant.Resources
             {
                 case "2":
                     if (EngineRestaurant.Debug)
-                        Console.WriteLine($"\t\t\tCaixa vai ao banheiro {SimulationEngine.Api.Engine.Time:N6}");
+                        Console.WriteLine($"\t\t\tCaixa vai ao banheiro {SimulationEngine.Api.Scheduler.Time:N6}");
                     break;
                 case "21":
                     if (EngineRestaurant.Debug)
-                        Console.WriteLine($"\t\t\tCaixa volta do banheiro {SimulationEngine.Api.Engine.Time:N6}");
+                        Console.WriteLine($"\t\t\tCaixa volta do banheiro {SimulationEngine.Api.Scheduler.Time:N6}");
                     break;
                 default:
                     break;
@@ -106,7 +106,7 @@ namespace Restaurant.Resources
         private void deliverOrderProducedToken(Place place)
         {
             if (place.Id == "30")
-                SimulationEngine.Api.Engine.ScheduleIn(new FinalizeDeliveryOrder(), EngineRestaurant.TimeDeliveryOrderByBartender);
+                SimulationEngine.Api.Scheduler.ScheduleIn(new FinalizeDeliveryOrder(), EngineRestaurant.TimeDeliveryOrderByBartender);
         }
 
         private void deliverOrderConsumedToken(Place place)
@@ -116,12 +116,12 @@ namespace Restaurant.Resources
                 case "3":
                     ClientGroup = EngineRestaurant.QueueDelivery.Remove();
                     if (EngineRestaurant.Debug) 
-                        Console.WriteLine($"\tGarçom começa a entrega {ClientGroup.Id}! {SimulationEngine.Api.Engine.Time}");
+                        Console.WriteLine($"\tGarçom começa a entrega {ClientGroup.Id}! {SimulationEngine.Api.Scheduler.Time}");
                     break;
                 case "31":
-                    SimulationEngine.Api.Engine.ScheduleNow(new StartEating(ClientGroup));
+                    SimulationEngine.Api.Scheduler.ScheduleNow(new StartEating(ClientGroup));
                     if (EngineRestaurant.Debug) 
-                        Console.WriteLine($"\tCliente {ClientGroup.Id} vai comecar comer! {SimulationEngine.Api.Engine.Time}");
+                        Console.WriteLine($"\tCliente {ClientGroup.Id} vai comecar comer! {SimulationEngine.Api.Scheduler.Time}");
                     break;
                 default:
                     break;
@@ -152,10 +152,10 @@ namespace Restaurant.Resources
         {
             if (place.Id == "40")
             {
-                SimulationEngine.Api.Engine.ScheduleIn(new FinalizeSanitizeTable(), EngineRestaurant.WeatherSanitizationTable);
+                SimulationEngine.Api.Scheduler.ScheduleIn(new FinalizeSanitizeTable(), EngineRestaurant.WeatherSanitizationTable);
                 
                 if(EngineRestaurant.Debug)
-                    Console.WriteLine($"\t\tGarçom comeca limpar mesa! {SimulationEngine.Api.Engine.Time}");
+                    Console.WriteLine($"\t\tGarçom comeca limpar mesa! {SimulationEngine.Api.Scheduler.Time}");
             }
         }
 
@@ -165,11 +165,11 @@ namespace Restaurant.Resources
             {
                 case "4":
                     if (EngineRestaurant.Debug)
-                        Console.WriteLine($"\t\tCliente sentou! {SimulationEngine.Api.Engine.Time}");
+                        Console.WriteLine($"\t\tCliente sentou! {SimulationEngine.Api.Scheduler.Time}");
                     break;
                 case "41":
                     if (EngineRestaurant.Debug)
-                        Console.WriteLine($"\t\tMesa Higienizada! {SimulationEngine.Api.Engine.Time}");
+                        Console.WriteLine($"\t\tMesa Higienizada! {SimulationEngine.Api.Scheduler.Time}");
                     break;
                 default:
                     break;

@@ -30,7 +30,7 @@ namespace Restaurant.Events.Cashier
 
             var clients = removeQueue();
 
-            SimulationEngine.Api.Engine.ScheduleIn(new FinishServiceCashier(cashier, clients, attendant), EngineRestaurant.TimeServiceCashier);
+            SimulationEngine.Api.Scheduler.ScheduleIn(new FinishServiceCashier(cashier, clients, attendant), EngineRestaurant.TimeServiceCashier);
         }
 
         private ClientGroup removeQueue()

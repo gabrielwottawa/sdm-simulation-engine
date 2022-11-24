@@ -11,11 +11,11 @@ namespace Restaurant.Events.Clients
         {
             addCashier();
 
-            if (SimulationEngine.Api.Engine.Time >= EngineRestaurant.MaxTimeArrivalCustomers)
+            if (SimulationEngine.Api.Scheduler.Time >= EngineRestaurant.MaxTimeArrivalCustomers)
                 return;
 
             var evArrivalCustomers = new ArrivalCustomers();
-            SimulationEngine.Api.Engine.ScheduleIn(evArrivalCustomers, EngineRestaurant.ArrivalCustomers);
+            SimulationEngine.Api.Scheduler.ScheduleIn(evArrivalCustomers, EngineRestaurant.ArrivalCustomers);
         }
 
         private void addCashier()
@@ -24,13 +24,13 @@ namespace Restaurant.Events.Clients
             {
                 EngineRestaurant.QueueCashierOne.Insert(new ClientGroup());
                 var evCashierOne = new StartServiceCashier(1);
-                SimulationEngine.Api.Engine.ScheduleNow(evCashierOne);
+                SimulationEngine.Api.Scheduler.ScheduleNow(evCashierOne);
             }
             else
             {
                 EngineRestaurant.QueueCashierTwo.Insert(new ClientGroup());
                 var evCashierTwo = new StartServiceCashier(2);
-                SimulationEngine.Api.Engine.ScheduleNow(evCashierTwo);
+                SimulationEngine.Api.Scheduler.ScheduleNow(evCashierTwo);
             }
         }
     }

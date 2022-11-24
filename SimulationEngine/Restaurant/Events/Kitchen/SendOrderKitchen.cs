@@ -20,7 +20,7 @@ namespace Restaurant.Events.Kitchen
             var client = EngineRestaurant.QueueOrders.Remove();
             var chefs = ResourceManager<Chef>.Allocated(qtyChef);
 
-            SimulationEngine.Api.Engine.ScheduleIn(new OrderPrepared(chefs, client), EngineRestaurant.TimePreparationOrder);
+            SimulationEngine.Api.Scheduler.ScheduleIn(new OrderPrepared(chefs, client), EngineRestaurant.TimePreparationOrder);
         }
     }
 }

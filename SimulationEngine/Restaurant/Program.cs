@@ -13,7 +13,7 @@ internal class Program
         EngineRestaurant.Initializer();
 
         var ev = new ArrivalCustomers();
-        Engine.ScheduleNow(ev);
+        Scheduler.ScheduleNow(ev);
 
         initializeMenu(() => executeCycle(EngineRestaurant.Bartender));
     }
@@ -22,7 +22,7 @@ internal class Program
 
     private static void initializeMenu(Action callback = null)
     {
-        Console.Clear();        
+        Console.Clear();
         Console.WriteLine("\nSelecione uma opção!");
 
         string option;
@@ -34,12 +34,12 @@ internal class Program
             executeOption(option, callback);
 
         } while (option != "7");
-    }    
+    }
 
     private static void printMenu()
-    {        
-        Console.WriteLine($"\nTempo atual do Sistema: {Engine.Time.ToString("N4")} {"min"}.");
-        Console.WriteLine($"Quantidade de Eventos Futuros: {Engine.FutureEventSize}");
+    {
+        Console.WriteLine($"\nTempo atual do Sistema: {Scheduler.Time.ToString("N4")} {EngineRestaurant.UnitTime}.");
+        Console.WriteLine($"Quantidade de Eventos Futuros: {Scheduler.FutureEventSize}");
         Console.WriteLine("\nDigite:\n");
         Console.WriteLine("Vazio -> Simular um passo.");
         Console.WriteLine("1 -> Simular todo o Sistema.");
@@ -57,21 +57,21 @@ internal class Program
         switch (option)
         {
             case "":
-                Engine.SimulateOneExecution(callback);
+                Scheduler.SimulateOneExecution(callback);
                 break;
 
             case "1":
-                Engine.Simulate(callback);
+                Scheduler.Simulate(callback);
                 break;
 
             case "2":
                 time = getTime($"Informe em quanto tempo ({EngineRestaurant.UnitTime}) a simulação irá parar:");
-                Engine.SimulateUntilDeterminedTime(time, callback);
+                Scheduler.SimulateUntilDeterminedTime(time, callback);
                 break;
 
             case "3":
                 time = getTime($"Informe por quanto tempo ({EngineRestaurant.UnitTime}) a simulação irá executar:");
-                Engine.SimulateForDeterminedTime(time, callback);
+                Scheduler.SimulateForDeterminedTime(time, callback);
                 break;
 
             case "4":
@@ -80,7 +80,7 @@ internal class Program
                 break;
 
             case "5":
-                foreach(var history in DataCollect.HistoricList)
+                foreach (var history in DataCollect.HistoricList)
                 {
                     Console.WriteLine("\n------------");
                     Console.WriteLine(history.Name + " maior tempo de vida " + history.LongerLifetime());
@@ -101,10 +101,10 @@ internal class Program
                 Console.WriteLine("Valor inválido! Por favor tente novamente.");
                 break;
         }
-    }    
+    }
 
     private static double getTime(string message)
-    {        
+    {
         while (true)
         {
             try
@@ -112,11 +112,11 @@ internal class Program
                 Console.WriteLine(message);
                 var value = double.Parse(Console.ReadLine());
                 return value;
-            } 
-            catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("Valor Invalido");
-                Thread.Sleep(500);                
+                Thread.Sleep(500);
             }
         }
     }
@@ -145,7 +145,7 @@ internal class Program
     private static void printResourceStatistics(SimulationEngine.Api.Base.HistoricBase allocationResourceCounterChair, string resourceName)
     {
         if (allocationResourceCounterChair != null)
-            Console.WriteLine($"O tempo médio que o recurso {resourceName} fica alocado é de "+ $"{allocationResourceCounterChair.StandardDeviationOfLife().ToString("N4")} {EngineRestaurant.UnitTime}.");
+            Console.WriteLine($"O tempo médio que o recurso {resourceName} fica alocado é de " + $"{allocationResourceCounterChair.StandardDeviationOfLife().ToString("N4")} {EngineRestaurant.UnitTime}.");
     }
 
     private static void showQueueStatistics()

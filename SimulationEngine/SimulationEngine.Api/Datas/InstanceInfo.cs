@@ -12,7 +12,7 @@
 
         public double DestructionTime { get; set; }
 
-        public double LifeTime => Alive ? Engine.Time - CreateTime : DestructionTime - CreateTime;
+        public double LifeTime => Alive ? Scheduler.Time - CreateTime : DestructionTime - CreateTime;
 
         public InstanceInfo(T instance)
         {
@@ -22,14 +22,14 @@
         public void ToLive()
         {
             Alive = true;
-            CreateTime = Engine.Time;
+            CreateTime = Scheduler.Time;
             Priority = int.MinValue;
         }
 
         public void ToDie()
         {
             Alive = false;
-            DestructionTime = Engine.Time;
+            DestructionTime = Scheduler.Time;
         }
     }
 }

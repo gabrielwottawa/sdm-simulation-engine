@@ -17,7 +17,7 @@ namespace Restaurant.Events.Clients
             foreach(var chair in clientGroup.OccupiedPlace)
                 chair.Deallocate();
 
-            SimulationEngine.Api.Engine.ScheduleNow(new GoToTable(clientGroup.Qty));
+            SimulationEngine.Api.Scheduler.ScheduleNow(new GoToTable(clientGroup.Qty));
         }
     }
 }

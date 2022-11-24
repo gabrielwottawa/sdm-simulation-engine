@@ -2,7 +2,7 @@
 
 namespace SimulationEngine.Api
 {
-    public static class Engine
+    public static class Scheduler
     {
         private static readonly PriorityQueue<ManagedEvent, double> listFutureEvents = new();
 

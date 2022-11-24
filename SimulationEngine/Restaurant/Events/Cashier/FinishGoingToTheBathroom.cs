@@ -11,10 +11,10 @@ namespace Restaurant.Events.Cashier
 
             var nextGoToBathroom = EngineRestaurant.TimeGoToBathroomCashier;
 
-            var sumNextGoToBathroom = SimulationEngine.Api.Engine.Time + nextGoToBathroom;
+            var sumNextGoToBathroom = SimulationEngine.Api.Scheduler.Time + nextGoToBathroom;
 
             if (sumNextGoToBathroom <= EngineRestaurant.MaximumTimeToBathroom)
-                SimulationEngine.Api.Engine.ScheduleIn(new GoToTheBathroom(), nextGoToBathroom);
+                SimulationEngine.Api.Scheduler.ScheduleIn(new GoToTheBathroom(), nextGoToBathroom);
         }
     }
 }

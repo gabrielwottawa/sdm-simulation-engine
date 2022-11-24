@@ -15,7 +15,7 @@ namespace Restaurant.Events.Clients
 
         protected override void Strategy()
         {
-            SimulationEngine.Api.Engine.ScheduleIn(new LeaveTheTable(clientGroup), EngineRestaurant.MealTime);
+            SimulationEngine.Api.Scheduler.ScheduleIn(new LeaveTheTable(clientGroup), EngineRestaurant.MealTime);
         }
     }
 }

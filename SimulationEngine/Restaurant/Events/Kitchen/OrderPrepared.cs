@@ -22,7 +22,7 @@ namespace Restaurant.Events.Kitchen
         {
             ResourceManager<Chef>.Deallocate(chefs);
 
-            SimulationEngine.Api.Engine.ScheduleNow(new SendOrderKitchen());
+            SimulationEngine.Api.Scheduler.ScheduleNow(new SendOrderKitchen());
 
             client.Order.ReadyToEat = true;
 

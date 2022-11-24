@@ -24,7 +24,7 @@ namespace Restaurant.Events.Bartender
 
         protected override void Strategy()
         {
-            SimulationEngine.Api.Engine.ScheduleNow(new SendOrderKitchen());
+            SimulationEngine.Api.Scheduler.ScheduleNow(new SendOrderKitchen());
 
             clientGroup.Order = new Order(clientGroup);
 
@@ -32,8 +32,8 @@ namespace Restaurant.Events.Bartender
 
             insertQueueTables();
 
-            SimulationEngine.Api.Engine.ScheduleNow(new GoToTable(clientGroup.Qty));
-            SimulationEngine.Api.Engine.ScheduleNow(new StartServiceCashier(cashier));
+            SimulationEngine.Api.Scheduler.ScheduleNow(new GoToTable(clientGroup.Qty));
+            SimulationEngine.Api.Scheduler.ScheduleNow(new StartServiceCashier(cashier));
 
             attendantsDeallocate();
         }

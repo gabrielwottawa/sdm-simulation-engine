@@ -2,7 +2,7 @@
 
 namespace SimulationEngine.Api.Datas
 {
-    public static class ManagerDatas<T> where T : Entity
+    public static class DataManager<T> where T : Entity
     {
         private static readonly Historic<T> historic = new Historic<T>();
 

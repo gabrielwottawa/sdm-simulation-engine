@@ -67,7 +67,7 @@ namespace Restaurant.Engine
             ResourceManager<TwoSeaterTable>.CreateResource(4);
             ResourceManager<FourSeaterTable>.CreateResource(4);
 
-            SimulationEngine.Api.Engine.ScheduleIn(new GoToTheBathroom(), TimeGoToBathroomCashier);
+            SimulationEngine.Api.Scheduler.ScheduleIn(new GoToTheBathroom(), TimeGoToBathroomCashier);
         }
     }
 }

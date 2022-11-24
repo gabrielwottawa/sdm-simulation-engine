@@ -39,7 +39,7 @@ namespace SimulationEngine.Api.Models
 
         private void callTypeManager(Type currentType, string methodName)
         {
-            var managerType = typeof(ManagerDatas<>).MakeGenericType(currentType);
+            var managerType = typeof(DataManager<>).MakeGenericType(currentType);
             var methodInfo = managerType.GetMethod(methodName);
             object[] args = { this };
 

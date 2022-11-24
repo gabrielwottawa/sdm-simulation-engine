@@ -48,7 +48,7 @@ namespace SimulationEngine.Api.Models
                     break;
             }
 
-            HistoricEntitySets.Add(new HistoricEntitySet(Engine.Time, CurrentSize));
+            HistoricEntitySets.Add(new HistoricEntitySet(Scheduler.Time, CurrentSize));
 
             return false;
         }
@@ -64,7 +64,7 @@ namespace SimulationEngine.Api.Models
 
             historic.DeleteInstance(entity);
 
-            HistoricEntitySets.Add(new HistoricEntitySet(Engine.Time, CurrentSize));
+            HistoricEntitySets.Add(new HistoricEntitySet(Scheduler.Time, CurrentSize));
 
             return entity;
         }

@@ -14,7 +14,7 @@ namespace SimulationEngine.Api.Managers
 
         private static List<TResource> listFreeResources()
         {
-            var resourcesInfoToLive = ManagerDatas<TResource>.ListAlive();
+            var resourcesInfoToLive = DataManager<TResource>.ListAlive();
             var resourcesFree = new List<TResource>();
 
             foreach(var info in resourcesInfoToLive)
